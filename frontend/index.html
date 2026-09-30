@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FieldMind AI</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at top right, #173b35 0%, transparent 35%),
+                linear-gradient(135deg, #071312, #0d1f1c);
+            color: #f4f7f6;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .logo span {
+            color: #55d6a5;
+        }
+
+        .badge {
+            padding: 8px 14px;
+            border: 1px solid #2f5f54;
+            border-radius: 20px;
+            color: #8ee8c5;
+            font-size: 13px;
+            background: rgba(20, 50, 44, 0.6);
+        }
+
+        .hero {
+            margin-bottom: 30px;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            line-height: 1.1;
+            max-width: 750px;
+            margin-bottom: 14px;
+        }
+
+        .hero h1 span {
+            color: #55d6a5;
+        }
+
+        .hero p {
+            color: #aabcb7;
+            font-size: 17px;
+            max-width: 700px;
+            line-height: 1.6;
+        }
+
+        .workspace {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+        }
+
+        .card {
+            background: rgba(16, 32, 29, 0.88);
+            border: 1px solid #24453e;
+            border-radius: 18px;
+            padding: 24px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+        }
+
+        .card h2 {
+            font-size: 18px;
+            margin-bottom: 18px;
+        }
+
+        .upload {
+            border: 2px dashed #315e54;
+            border-radius: 14px;
+            padding: 35px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .upload:hover {
+            border-color: #55d6a5;
+            background: rgba(85, 214, 165, 0.04);
+        }
+
+        .upload input {
+            display: none;
+        }
+
+        .upload-icon {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+
+        .upload p {
+            color: #9fb2ad;
+            font-size: 14px;
+        }
+
+        #fileName {
+            margin-top: 12px;
+            color: #55d6a5;
+            font-size: 13px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 120px;
+            resize: vertical;
+            background: #091714;
+            border: 1px solid #2b5148;
+            border-radius: 12px;
+            padding: 15px;
+            color: white;
+            font-size: 15px;
+            outline: none;
+        }
+
+        textarea:focus {
+            border-color: #55d6a5;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 18px;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            background: #55d6a5;
+            color: #06110e;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+            background: #72e5ba;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: wait;
+            transform: none;
+        }
+
+        .result {
+            min-height: 300px;
+        }
+
+        .status {
+            color: #91aaa4;
+            font-size: 14px;
+            margin-bottom: 18px;
+        }
+
+        .analysis {
+            white-space: pre-wrap;
+            line-height: 1.65;
+            color: #e4eeeb;
+            font-size: 15px;
+        }
+
+        .placeholder {
+            color: #71847f;
+            text-align: center;
+            padding: 90px 20px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #60736e;
+            font-size: 12px;
+        }
+
+        @media (max-width: 800px) {
+            body {
+                padding: 18px;
+            }
+
+            .workspace {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            header {
+                align-items: flex-start;
+                gap: 15px;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <header>
+        <div class="logo">
+            Field<span>Mind</span> AI
+        </div>
+
+        <div class="badge">
+            ● Local AI • Private by Design
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>
+            See the field.<br>
+            <span>Understand the problem.</span>
+        </h1>
+
+        <p>
+            An AI-powered visual field assistant that analyzes real-world
+            images locally and provides practical guidance without sending
+            sensitive field data to the cloud.
+        </p>
+    </section>
+
+    <div class="workspace">
+
+        <div class="card">
+
+            <h2>01 — Field Image</h2>
+
+            <label class="upload">
+                <input
+                    type="file"
+                    id="imageInput"
+                    accept="image/*"
+                >
+
+                <div class="upload-icon">📷</div>
+
+                <strong>Upload an image</strong>
+
+                <p>
+                    Equipment, machinery, components or field conditions
+                </p>
+
+                <div id="fileName"></div>
+            </label>
+
+            <h2 style="margin-top: 24px;">
+                02 — Ask FieldMind
+            </h2>
+
+            <div style="position:relative;">
+    <textarea
+        id="question"
+        placeholder="Example: What problem do you see in this equipment and what should I do?"
+    ></textarea>
+
+    <button
+        type="button"
+        id="voiceBtn"
+        style="
+            width:auto;
+            margin-top:8px;
+            padding:10px 16px;
+            background:#173b35;
+            color:#8ee8c5;
+            border:1px solid #2f5f54;
+        "
+    >
+        🎤 Speak
+    </button>
+
+    <span
+        id="voiceStatus"
+        style="
+            margin-left:10px;
+            color:#71847f;
+            font-size:13px;
+        "
+    ></span>
+</div>
+
+            <button id="analyzeBtn">
+                Analyze with FieldMind
+            </button>
+
+        </div>
+
+        <div class="card result">
+
+            <h2>03 — AI Field Assessment</h2>
+
+            <div class="status" id="status">
+                Ready for analysis.
+            </div>
+
+            <div
+                class="analysis"
+                id="analysis"
+            >
+                <div class="placeholder">
+                    Upload an image and ask a question.<br><br>
+                    FieldMind will analyze it locally.
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="footer">
+        FieldMind AI • Local Vision Intelligence • Built for private field assistance
+    </div>
+
+</div>
+
+
+<script>
+
+    const imageInput = document.getElementById("imageInput");
+    const questionInput = document.getElementById("question");
+    const voiceBtn = document.getElementById("voiceBtn");
+const voiceStatus = document.getElementById("voiceStatus");
+
+const SpeechRecognition =
+    window.SpeechRecognition ||
+    window.webkitSpeechRecognition;
+
+if (SpeechRecognition) {
+
+    const recognition = new SpeechRecognition();
+
+    recognition.lang = "en-IN";
+    recognition.continuous = false;
+    recognition.interimResults = false;
+
+    voiceBtn.addEventListener("click", () => {
+
+        recognition.start();
+
+        voiceBtn.textContent = "🎤 Listening...";
+        voiceStatus.textContent = "Speak your question...";
+    });
+
+    recognition.onresult = (event) => {
+
+        const transcript =
+            event.results[0][0].transcript;
+
+        questionInput.value = transcript;
+
+        voiceBtn.textContent = "🎤 Speak";
+        voiceStatus.textContent = "Voice captured.";
+    };
+
+    recognition.onerror = () => {
+
+        voiceBtn.textContent = "🎤 Speak";
+        voiceStatus.textContent =
+            "Could not capture voice.";
+    };
+
+    recognition.onend = () => {
+
+        voiceBtn.textContent = "🎤 Speak";
+    };
+
+} else {
+
+    voiceBtn.disabled = true;
+    voiceStatus.textContent =
+        "Voice input not supported in this browser.";
+}
+    const analyzeBtn = document.getElementById("analyzeBtn");
+    const fileName = document.getElementById("fileName");
+    const status = document.getElementById("status");
+    const analysis = document.getElementById("analysis");
+
+
+    imageInput.addEventListener("change", () => {
+
+        if (imageInput.files.length > 0) {
+            fileName.textContent =
+                "Selected: " + imageInput.files[0].name;
+        }
+
+    });
+
+
+    analyzeBtn.addEventListener("click", async () => {
+
+        if (!imageInput.files.length) {
+            alert("Please select an image first.");
+            return;
+        }
+
+        const question =
+            questionInput.value.trim() ||
+            "What do you see in this image?";
+
+
+        const formData = new FormData();
+
+        formData.append(
+            "file",
+            imageInput.files[0]
+        );
+
+        formData.append(
+            "question",
+            question
+        );
+
+
+        analyzeBtn.disabled = true;
+        analyzeBtn.textContent = "Analyzing...";
+        status.textContent = "FieldMind AI is analyzing the image...";
+        analysis.textContent = "";
+
+
+        try {
+
+            const response = await fetch(
+                "/analyze-image",
+                {
+                    method: "POST",
+                    body: formData
+                }
+            );
+
+
+            const data = await response.json();
+
+
+            if (!response.ok) {
+                throw new Error(
+                    data.detail || "Analysis failed."
+                );
+            }
+
+
+            status.textContent =
+                "Analysis complete.";
+
+            analysis.textContent =
+                data.analysis;
+
+
+        } catch (error) {
+
+            status.textContent =
+                "Analysis failed.";
+
+            analysis.textContent =
+                error.message;
+
+        } finally {
+
+            analyzeBtn.disabled = false;
+            analyzeBtn.textContent =
+                "Analyze with FieldMind";
+
+        }
+
+    });
+
+</script>
+
+</body>
+</html>
